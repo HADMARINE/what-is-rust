@@ -11,10 +11,102 @@ fn main() {
     // }
     // println!("{}", guess);
     // closure(1)(10);
-    let str: String = if__fn().to_string();
-    println!("{}", str);
-    let __s = String::from("HELLO_WORLD");
-    first_ptr_in_rs_fn(__s[1..3].to_string());
+    // let str: String = if__fn().to_string();
+    // println!("{}", str);
+    // let __s = String::from("HELLO_WORLD");
+    // first_ptr_in_rs_fn(__s[1..3].to_string());
+    // for_loop();
+    // str_ownership_test_1()
+
+    // println!("{}", first_tuples((1, 2)));
+
+    struct_impl();
+}
+
+struct Rect {
+    w: u32,
+    h: u32,
+}
+
+impl Rect {
+    fn area(&self) -> u32 {
+        self.w * self.h
+    }
+
+    fn square(size: u32) -> Rect {
+        Rect { w: size, h: size }
+    }
+}
+
+fn struct_impl() {
+    let rect1 = Rect { h: 30, w: 50 };
+
+    println!("Area of the rect is {}", &rect1.area());
+
+    let rect2: Rect = Rect::square(1);
+    println!("rect2: {}", rect2.area());
+}
+
+fn first_tuples(dim: (u32, u32)) -> u32 {
+    let res = dim.0 * dim.1;
+    println!("{}", &res);
+    res
+}
+
+fn first_struct() {
+    #[derive(Debug, Clone)] // allows to clone this struct can use like: #[derive(Clone, Debug, Copy, .....)]
+    struct User {
+        username: String,
+        password: String,
+        age: i8,
+    };
+
+    let user1 = User {
+        age: 1,
+        password: String::from("1234"),
+        username: String::from("username"),
+    };
+
+    let mut user2 = User {
+        age: 1,
+        ..user1.clone() // this has to be the bottom of the declaration
+    };
+
+    user2.age = 2;
+
+    fn show_user(u: &User) {
+        println!(
+            "username: {}, age: {}, password: {}",
+            u.username, u.age, u.password
+        );
+    }
+
+    show_user(&user1);
+    show_user(&user2);
+
+    println!("{:?}", &user1); // can print if only derived Debug
+}
+
+fn str_ownership_test_1() {
+    let mut s1 = String::from("HELLO WORLD");
+
+    println!("S1 : {}", s1);
+
+    let s2 = &mut s1;
+    let mut s3 = s2.clone();
+    s3.push_str(" FROM YOUR BEST DEVELOPER");
+
+    s2.push_str("!");
+    println!("S2 : {}", s2);
+    println!("S3 : {}", s3);
+}
+
+fn for_loop() {
+    let a = [1, 2, 3, 4, 5];
+
+    for e in a.iter() {
+        println!("{}", e);
+    }
 }
 
 fn first_ptr_in_rs_fn(s: String) {
@@ -101,17 +193,17 @@ where
     }
 }
 
-fn spaces_fn() {
-    {
-        let spaces = "     ";
-        let spaces = spaces.len();
-    }
+// fn spaces_fn() {
+//     {
+//         let spaces = "     ";
+//         let spaces = spaces.len();
+//     }
 
-    {
-        let mut spaces = "      ";
-        // spaces = spaces.len(); // error
-    }
-}
+//     {
+//         let mut spaces = "      ";
+//         // spaces = spaces.len(); // error
+//     }
+// }
 
 fn guess_fn() -> bool {
     let guess: bool = "true".parse().expect("Not a number!");
