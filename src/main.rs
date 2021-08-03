@@ -20,30 +20,86 @@ fn main() {
 
     // println!("{}", first_tuples((1, 2)));
 
-    struct_impl();
+    // first_enum();
+
+    // println!("{}", module_module::hello());
 }
 
-struct Rect {
-    w: u32,
-    h: u32,
+mod module_module {
+    pub fn hello() -> i32 {
+        //can use like module_module::hello()
+        hello_priv()
+    }
+
+    fn hello_priv() -> i32 {
+        //cannot use outside of this module
+        1
+    }
 }
 
-impl Rect {
-    fn area(&self) -> u32 {
-        self.w * self.h
+fn first_enum() {
+    #[derive(PartialEq)]
+    enum IpAddrKind {
+        // isize allowed for value
+        V4 = 0,
+        V6 = 1,
     }
 
-    fn square(size: u32) -> Rect {
-        Rect { w: size, h: size }
+    let four = IpAddrKind::V4;
+    let six = IpAddrKind::V6;
+
+    //https://stackoverflow.com/questions/51429501/how-do-i-conditionally-check-if-an-enum-is-one-variant-or-another
+
+    fn is_four_match(v: IpAddrKind) -> bool {
+        match v {
+            IpAddrKind::V4 => true,
+            IpAddrKind::V6 => false,
+        }
     }
+
+    fn is_four_with_if(v: IpAddrKind) -> bool {
+        if v == IpAddrKind::V4 {
+            // derive PartialEq to validate like this
+            true
+        } else {
+            false
+        }
+    }
+
+    fn is_four_with_if_let(v: IpAddrKind) -> bool {
+        if let IpAddrKind::V4 = v {
+            true
+        } else {
+            false
+        }
+    }
+
+    let is_four = is_four_with_if_let;
+
+    println!("is 'four' ipv4? {}", is_four(four));
+    println!("is 'six' ipv4? {}", is_four(six));
 }
 
 fn struct_impl() {
+    struct Rect {
+        w: u32,
+        h: u32,
+    }
+
+    impl Rect {
+        fn area(&self) -> u32 {
+            self.w * self.h
+        }
+
+        fn square(size: u32) -> Rect {
+            Rect { w: size, h: size }
+        }
+    }
     let rect1 = Rect { h: 30, w: 50 };
 
     println!("Area of the rect is {}", &rect1.area());
 
-    let rect2: Rect = Rect::square(1);
+    let rect2 = Rect::square(1);
     println!("rect2: {}", rect2.area());
 }
 
