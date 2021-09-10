@@ -1,5 +1,9 @@
 use std::io;
 
+macro_rules! test_macro {
+    ($i: ident) => Some($i)
+}
+
 fn main() {
     // println!("Hello, world!");
 
@@ -23,6 +27,18 @@ fn main() {
     // first_enum();
 
     // println!("{}", module_module::hello());
+
+    macro_rules! pat {
+        ($i:ident) => {
+            Some($i)
+        };
+    }
+
+    if let pat!(x) = Some(1) {
+        assert_eq!(x, 1);
+    }
+
+    assert_eq!(test_macro!(1), Some(1));
 }
 
 mod module_module {
