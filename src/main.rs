@@ -1,12 +1,6 @@
-use std::io;
-
-macro_rules! test_macro {
-    ($i: ident) => Some($i)
-}
-
+mod sub;
 fn main() {
     // println!("Hello, world!");
-
     // let guess = guess_provider();
     // if guess == "Hello" {
     //     println!("World");
@@ -27,18 +21,44 @@ fn main() {
     // first_enum();
 
     // println!("{}", module_module::hello());
+    // let mut s = String::from("hello");
+    // change(&mut s);
+    // println!("{}", &s);
+    // assert_eq!(1, 2);
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
 
-    macro_rules! pat {
-        ($i:ident) => {
-            Some($i)
-        };
+    print_option(five);
+    print_option(six);
+    print_option(none);
+}
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i + 1),
     }
+}
 
-    if let pat!(x) = Some(1) {
-        assert_eq!(x, 1);
+fn print_option<T: std::fmt::Display>(x: Option<T>) {
+    match x {
+        None => println!("The value is None!"),
+        Some(i) => println!("The value is {}!", i),
     }
+}
 
-    assert_eq!(test_macro!(1), Some(1));
+fn change(some_str: &mut String) {
+    some_str.push_str(", world");
+}
+
+fn first_word(s: &String) -> usize {
+    for (i, &item) in s.as_bytes().iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+    return 0usize;
 }
 
 mod module_module {
@@ -131,7 +151,7 @@ fn first_struct() {
         username: String,
         password: String,
         age: i8,
-    };
+    }
 
     let user1 = User {
         age: 1,
