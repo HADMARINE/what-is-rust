@@ -1,4 +1,6 @@
 mod sub;
+use std::collections::HashMap;
+use std::io;
 fn main() {
     // println!("Hello, world!");
     // let guess = guess_provider();
@@ -32,6 +34,24 @@ fn main() {
     print_option(five);
     print_option(six);
     print_option(none);
+
+    let mut map: HashMap<String, i32> = HashMap::new();
+
+    map.insert(String::from("Hello"), 12);
+    map.insert(String::from("World"), 22);
+
+    for (key, value) in &map {
+        println!("{} : {}", key, value);
+    }
+    let g:GenericStruct<f32> = GenericStruct {
+        x:32.0,
+        y:32.0
+    }
+}
+
+struct GenericStruct<T> {
+    x: T,
+    y: T,
 }
 
 fn plus_one(x: Option<i32>) -> Option<i32> {
