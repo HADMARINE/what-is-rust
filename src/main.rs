@@ -1,6 +1,9 @@
 mod sub;
+mod test;
+
 use std::collections::HashMap;
 use std::io;
+
 fn main() {
     // println!("Hello, world!");
     // let guess = guess_provider();
@@ -43,9 +46,32 @@ fn main() {
     for (key, value) in &map {
         println!("{} : {}", key, value);
     }
-    let g:GenericStruct<f32> = GenericStruct {
-        x:32.0,
-        y:32.0
+    let g: GenericStruct<f32> = GenericStruct { x: 32.0, y: 32.0 };
+
+    let str_a = String::from("abc");
+    let str_b = String::from("abb");
+    let longer_str = return_longer_str(str_a.as_str(), str_b.as_str());
+
+    match longer_str {
+        Ok(x) => println!("{}", x),
+        Err(x) => println!("{}", x),
+    }
+}
+
+fn return_longer_str<'str_lifetime>(
+    x: &'str_lifetime str,
+    y: &'str_lifetime str,
+) -> Result<&'str_lifetime str, String> {
+    let x_len = x.len();
+    let y_len = y.len();
+
+    if x_len > y_len {
+        Ok(x)
+    } else if x_len == y_len {
+        let return_str = String::from(format!("Two string {} and {} are the same", x, y));
+        Err(return_str)
+    } else {
+        Ok(y)
     }
 }
 
