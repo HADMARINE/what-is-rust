@@ -1,5 +1,5 @@
 mod sub;
-mod test;
+mod tests;
 
 use std::collections::HashMap;
 use std::io;
