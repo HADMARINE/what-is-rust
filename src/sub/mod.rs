@@ -1,3 +1,4 @@
+use std::rc::Rc;
 use std::thread;
 use std::time::Duration;
 
@@ -25,14 +26,56 @@ fn simulated_expensive_calculation(intensity: u32) -> u32 {
     intensity
 }
 
-fn test_heap() -> i32 {
+fn test_heap() -> Box<i32> {
     let b = Box::new(5);
     println!("b = {}", b);
-    b.into()
+    b
+}
+
+pub fn test_cons() {
+    enum List<T> {
+        Cons(T, Rc<List<T>>),
+        Nil,
+    }
+
+    use List::{Cons, Nil};
+
+    fn get_current_tree_value<'a, T>(tree: &Rc<List<T>>) -> Vec<&T> {
+        let mut arr: Vec<&T> = Vec::new();
+        let mut current_tree: &Rc<List<T>> = tree;
+        loop {
+            match &**current_tree {
+                Cons(value, list) => {
+                    arr.push(value.clone());
+                    current_tree = &list;
+                }
+                Nil => break,
+            }
+        }
+        println!("tree's ref count : {}", Rc::strong_count(&tree));
+
+        arr
+    }
+    fn print_vec<T: std::fmt::Display>(vec: &Vec<T>, vec_name: String) {
+        println!("___ Printing Vector : {} _____", vec_name);
+        for item in vec {
+            print!("{} ", &item);
+        }
+        println!("\n________");
+    }
+
+    let a = Rc::new(Cons(5, Rc::new(Nil)));
+    let b = Rc::new(Cons(6, a.clone()));
+    let c = Rc::new(Cons(7, b.clone()));
+
+    print_vec(&get_current_tree_value(&c), String::from("c"));
+    print_vec(&get_current_tree_value(&b), String::from("b"));
+    print_vec(&get_current_tree_value(&a), String::from("a"));
 }
 
 #[cfg(test)]
 mod tests {
+
     #[test]
     fn add_two_priv() {
         assert_eq!(4, super::add_two_priv(2))
@@ -66,6 +109,15 @@ mod tests {
 
     #[test]
     fn test_heap_test() {
-        assert_eq!(test_heap())
+        let heap_data = super::test_heap();
+        assert_eq!(*heap_data, 5);
+        println!("Created heap data, and it was success when evaluating value.");
+        drop(heap_data);
+        println!("Dropped heap data");
+    }
+
+    #[test]
+    fn test_cons_test() {
+        super::test_cons();
     }
 }

@@ -1,3 +1,5 @@
+mod messenger;
+mod node;
 mod sub;
 mod tests;
 
@@ -30,32 +32,35 @@ fn main() {
     // change(&mut s);
     // println!("{}", &s);
     // assert_eq!(1, 2);
-    let five = Some(5);
-    let six = plus_one(five);
-    let none = plus_one(None);
+    // let five = Some(5);
+    // let six = plus_one(five);
+    // let none = plus_one(None);
 
-    print_option(five);
-    print_option(six);
-    print_option(none);
+    // print_option(five);
+    // print_option(six);
+    // print_option(none);
 
-    let mut map: HashMap<String, i32> = HashMap::new();
+    // let mut map: HashMap<String, i32> = HashMap::new();
 
-    map.insert(String::from("Hello"), 12);
-    map.insert(String::from("World"), 22);
+    // map.insert(String::from("Hello"), 12);
+    // map.insert(String::from("World"), 22);
 
-    for (key, value) in &map {
-        println!("{} : {}", key, value);
-    }
-    let g: GenericStruct<f32> = GenericStruct { x: 32.0, y: 32.0 };
+    // for (key, value) in &map {
+    //     println!("{} : {}", key, value);
+    // }
+    // let g: GenericStruct<f32> = GenericStruct { x: 32.0, y: 32.0 };
 
-    let str_a = String::from("abc");
-    let str_b = String::from("abb");
-    let longer_str = return_longer_str(str_a.as_str(), str_b.as_str());
+    // let str_a = String::from("abc");
+    // let str_b = String::from("abb");
+    // let longer_str = return_longer_str(str_a.as_str(), str_b.as_str());
 
-    match longer_str {
-        Ok(x) => println!("{}", x),
-        Err(x) => println!("{}", x),
-    }
+    // match longer_str {
+    //     Ok(x) => println!("{}", x),
+    //     Err(x) => println!("{}", x),
+    // }
+
+    // crate::sub::test_cons();
+    crate::node::run();
 }
 
 fn return_longer_str<'str_lifetime>(
