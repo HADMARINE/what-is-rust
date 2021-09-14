@@ -1,7 +1,9 @@
 mod messenger;
 mod node;
+mod oop;
 mod sub;
 mod tests;
+mod thread;
 
 use std::collections::HashMap;
 use std::io;
@@ -60,7 +62,9 @@ fn main() {
     // }
 
     // crate::sub::test_cons();
-    crate::node::run();
+    // crate::node::run();
+    // crate::thread::run();
+    crate::oop::run();
 }
 
 fn return_longer_str<'str_lifetime>(
