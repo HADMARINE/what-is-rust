@@ -6,6 +6,7 @@ extern "C" {
 fn main() {
     println!("Hello, from RUST!");
     let res = unsafe { bad_add(12., 7.) };
+    println!("Hello, result is {}", &res);
 }
 
 #[cfg(test)]

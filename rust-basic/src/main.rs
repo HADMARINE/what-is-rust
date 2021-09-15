@@ -1,4 +1,3 @@
-mod extern_c;
 mod messenger;
 mod node;
 mod oop;
@@ -65,7 +64,7 @@ fn main() {
     // crate::sub::test_cons();
     // crate::node::run();
     // crate::thread::run();
-    crate::extern_c::run();
+    crate::thread::run();
 }
 
 fn return_longer_str<'str_lifetime>(

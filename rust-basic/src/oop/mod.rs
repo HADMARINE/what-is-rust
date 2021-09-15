@@ -4,6 +4,12 @@ trait Etudie {
     fn etudie_tous_les_jours() -> u32;
 }
 
+// trait Print<slf = Self> {
+//     fn print_inherit(self) {
+//         println!("Je suis {}, J'ai {} ans.", &self.nom, &self.age);
+//     }
+// }
+
 struct Personne {
     pub age: u32,
     pub nom: String,
