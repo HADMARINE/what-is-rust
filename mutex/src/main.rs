@@ -17,7 +17,7 @@ fn main() {
             printer(i, String::from("THREAD SPAWNED"));
 
             printer(i, String::from("WAITING FOR MUTEX"));
-            let m_lock = match m.lock() {
+            let mut m_lock = match m.lock() {
                 Ok(v) => v,
                 Err(e) => panic!("Error"),
             };
@@ -26,7 +26,7 @@ fn main() {
             thread::sleep(Duration::from_secs(1));
             printer(i, String::from("THREAD SLEEP END"));
 
-            m_lock.add(1);
+            *m_lock += 1;
             printer(i, String::from("INT ADDED"));
             ()
         });
@@ -36,6 +36,8 @@ fn main() {
     for i in hdlrs {
         i.join();
     }
+
+    println!("Value : {}", m.lock().unwrap());
 }
 
 fn printer(i: i32, s: String) {
